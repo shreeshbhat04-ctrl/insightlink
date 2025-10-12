@@ -1,0 +1,85 @@
+/* Reset some default styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f9fb;
+  color: #222;
+}
+
+/* Container for main content */
+.home-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  text-align: center;
+}
+
+/* Headings */
+h1, h2 {
+  color: #2d7ff9;
+  margin-bottom: 16px;
+}
+
+/* CTA Button */
+.cta-button {
+  background: #2d7ff9;
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 18px;
+  transition: background 0.2s;
+}
+
+.cta-button:hover {
+  background: #195bb5;
+}
+
+/* Form styles */
+form > div {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cfd8dc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+button[type="submit"] {
+  margin-top: 10px;
+}
+
+/* Error message */
+p[style*="color: red"] {
+  margin-top: 10px;
+  font-size: 0.98rem;
+}
+
+/* Link styles */
+a {
+  color: #2d7ff9;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
