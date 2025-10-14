@@ -13,6 +13,7 @@ module.exports = function (req, res, next) {
     req.user = decoded;
     next();
   } catch (err) {
+    console.error('JWT Verification Error:', err); // Error logging added
     res.status(401).json({ msg: 'Token is not valid' });
   }
 };
