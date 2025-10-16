@@ -16,7 +16,7 @@ router.post('/', authMiddleware, async (req, res) => {
     );
     res.json(newLink.rows[0]);
   } catch (err) {
-    console.error(err.message);
+    console.error('Links Route Error:', err); // Log full error object
     res.status(500).send('Server Error');
   }
 });
@@ -31,7 +31,7 @@ router.get('/', authMiddleware, async (req, res) => {
     );
     res.json(userLinks.rows);
   } catch (err) {
-    console.error(err.message);
+    console.error('Links Route Error:', err); // Log full error object
     res.status(500).send('Server Error');
   }
 });

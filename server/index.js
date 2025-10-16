@@ -45,7 +45,7 @@ app.get('/:shortCode', async (req, res) => {
 
     return res.redirect(301, link.long_url);
   } catch (err) {
-    console.error(err.message);
+     console.error('Redirection Route Error:', err);
     res.status(500).send('Server Error');
   }
 });
