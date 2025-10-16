@@ -20,8 +20,8 @@ router.post('/register', async (req, res) => {
     );
     res.json(newUser.rows[0]);
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('2Server Error');
+    console.error('--- REGISTER ROUTE CRASH ---', err); // Enhanced logging
+    res.status(500).send('Server Error');
   }
 });
 
@@ -40,8 +40,9 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ userId: user.rows[0].id }, 'your_jwt_secret');
     res.json({ token });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('3Server Error');
+    // This is the updated line for better debugging
+    console.error('--- LOGIN ROUTE CRASH ---', err); 
+    res.status(500).send('Server Error');
   }
 });
 

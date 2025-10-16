@@ -17,7 +17,7 @@ router.post('/', authMiddleware, async (req, res) => {
     res.json(newLink.rows[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('4Server Error');
+    res.status(500).send('Server Error');
   }
 });
 
@@ -32,7 +32,7 @@ router.get('/', authMiddleware, async (req, res) => {
     res.json(userLinks.rows);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('5Server Error');
+    res.status(500).send('Server Error');
   }
 });
 
