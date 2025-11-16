@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Line } from 'react-chartjs-2';
+// AnalyticsPage.jsx
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,9 +12,9 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
+} from "chart.js";
+import "./Dashboard.css";
 
-// This is required to register the components for Chart.js
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -26,14 +27,14 @@ ChartJS.register(
 
 function AnalyticsPage() {
   const [analyticsData, setAnalyticsData] = useState(null);
-  const { linkId } = useParams(); // Gets the :linkId from the URL (e.g., '3')
+  const { linkId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAnalytics = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        navigate('/login'); // Redirect if not logged in
+        navigate("/login");
         return;
       }
 
@@ -46,9 +47,11 @@ function AnalyticsPage() {
         );
         setAnalyticsData(response.data);
       } catch (error) {
-        console.error('Failed to fetch analytics:', error);
-        alert('Could not load analytics data. You may not have permission to view this link.');
-        navigate('/dashboard'); // Go back to the dashboard if the request fails
+        console.error("Failed to fetch analytics:", error);
+        alert(
+          "Could not load analytics data. You may not have permission to view this link."
+        );
+        navigate("/dashboard");
       }
     };
 
@@ -57,32 +60,71 @@ function AnalyticsPage() {
     }
   }, [linkId, navigate]);
 
-  // Show a loading message while data is being fetched
   if (!analyticsData) {
-    return <div>Loading analytics...</div>;
+    return (
+      <div className="dashboard-page">
+        <div className="dashboard-shell">
+          <div className="dashboard-card">
+            <p>Loading analytics...</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  // Prepare the data for the chart component
   const chartData = {
-    labels: analyticsData.clicksOverTime.map(d => new Date(d.date).toLocaleDateString()),
+    labels: analyticsData.clicksOverTime.map((d) =>
+      new Date(d.date).toLocaleDateString()
+    ),
     datasets: [
       {
-        label: 'Clicks per Day (Last 30 Days)',
-        data: analyticsData.clicksOverTime.map(d => d.count),
+        label: "Clicks per Day (Last 30 Days)",
+        data: analyticsData.clicksOverTime.map((d) => d.count),
         fill: false,
-        backgroundColor: 'rgb(75, 192, 192)',
-        borderColor: 'rgba(75, 192, 192, 0.5)',
-        tension: 0.1,
+        backgroundColor: "rgb(37, 99, 235)",
+        borderColor: "rgba(37, 99, 235, 0.4)",
+        tension: 0.2,
       },
     ],
   };
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Link Analytics</h2>
-      <h3>Total Clicks: {analyticsData.totalClicks}</h3>
-      <div style={{ maxWidth: '800px', margin: '2rem auto' }}>
-        <Line data={chartData} />
+    <div className="dashboard-page">
+      <div className="dashboard-shell">
+        <section className="dashboard-card">
+          <div className="dashboard-card-header analytics-header">
+            <div>
+              <h2>Link Analytics</h2>
+              <p>
+                Visualize how your short link is performing over the last 30
+                days.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              className="button-magic button-magic-secondary"
+              onClick={() => navigate("/dashboard")}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span>Back to Dashboard</span>
+            </button>
+          </div>
+
+          <div className="analytics-summary">
+            <div className="analytics-pill">
+              Total Clicks: <strong>{analyticsData.totalClicks}</strong>
+            </div>
+          </div>
+
+          <div className="analytics-chart-wrapper">
+            <Line data={chartData} />
+          </div>
+        </section>
       </div>
     </div>
   );

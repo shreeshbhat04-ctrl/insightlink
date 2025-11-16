@@ -1,32 +1,32 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+// DashboardPage.jsx
+import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import "./Dashboard.css";
 
 function DashboardPage() {
   const [links, setLinks] = useState([]);
-  const [longUrl, setLongUrl] = useState('');
+  const [longUrl, setLongUrl] = useState("");
   const navigate = useNavigate();
 
-  // This function will run once when the component loads
   useEffect(() => {
     const fetchLinks = async () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        navigate('/login'); // Redirect to login if no token
+        navigate("/login");
         return;
       }
 
       try {
-        const response = await axios.get('http://localhost:5000/api/links', {
+        const response = await axios.get("http://localhost:5000/api/links", {
           headers: {
-            Authorization: `Bearer ${token}`, // Send the token for authentication
+            Authorization: `Bearer ${token}`,
           },
         });
         setLinks(response.data);
       } catch (error) {
-        console.error('Failed to fetch links:', error);
-        // Could also handle token expiration here and redirect
-        navigate('/login');
+        console.error("Failed to fetch links:", error);
+        navigate("/login");
       }
     };
 
@@ -35,59 +35,116 @@ function DashboardPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('token');
-    
+    const token = localStorage.getItem("token");
+
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/links',
-        { longUrl }, // The data to send
+        "http://localhost:5000/api/links",
+        { longUrl },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // The authentication header
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      // Add the new link to the top of our list and clear the input
       setLinks([response.data, ...links]);
-      setLongUrl('');
+      setLongUrl("");
     } catch (error) {
-      console.error('Failed to create link:', error);
-      alert('Could not create link. Please try again.');
+      console.error("Failed to create link:", error);
+      alert("Could not create link. Please try again.");
     }
   };
 
   return (
-    <div>
-      <h2>Your Dashboard</h2>
+    <div className="dashboard-page">
+      <div className="dashboard-shell">
+        <header className="dashboard-header">
+          <h2>Your Dashboard</h2>
+          <p>
+            Create new short links and track how they perform over time — all
+            in one place.
+          </p>
+        </header>
 
-      <form onSubmit={handleSubmit}>
-        <h3>Create a New Short Link</h3>
-        <input
-          type="url"
-          placeholder="Enter your long URL here"
-          value={longUrl}
-          onChange={(e) => setLongUrl(e.target.value)}
-          required
-        />
-        <button type="submit">Shorten</button>
-      </form>
+        {/* Create link card */}
+        <section className="dashboard-card dashboard-create-card">
+          <div className="dashboard-card-header">
+            <h3>Create a New Short Link</h3>
+            <p>Paste a long URL and we’ll generate a trackable short link.</p>
+          </div>
 
-      <hr />
+          <form className="dashboard-form" onSubmit={handleSubmit}>
+            <input
+              className="dashboard-input"
+              type="url"
+              placeholder="https://example.com/your/very/long/url"
+              value={longUrl}
+              onChange={(e) => setLongUrl(e.target.value)}
+              required
+            />
 
-      <h3>Your Links</h3>
-      {links.length > 0 ? (
-        <ul>
-          {links.map((link) => (
-            <li key={link.id}>
-              <p><strong>Short:</strong> http://localhost:5000/{link.short_code}</p>
-              <p><strong>Original:</strong> {link.long_url}</p>
-              <Link to={`/analytics/${link.id}`}>View Analytics</Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>You haven't created any links yet.</p>
-      )}
+            {/* Magic animated button */}
+            <button type="submit" className="button-magic">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span>Shorten Link</span>
+            </button>
+          </form>
+        </section>
+
+        {/* Links list */}
+        <section className="dashboard-card">
+          <div className="dashboard-card-header">
+            <h3>Your Links</h3>
+            <p>
+              View your previously created links and open detailed analytics.
+            </p>
+          </div>
+
+          {links.length > 0 ? (
+            <ul className="links-list">
+              {links.map((link) => (
+                <li className="link-item" key={link.id}>
+                  <div className="link-main">
+                    <div>
+                      <div className="link-label">Short URL</div>
+                      <a
+                        href={`http://localhost:5000/${link.short_code}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link-short"
+                      >
+                        {`http://localhost:5000/${link.short_code}`}
+                      </a>
+                    </div>
+                    <div>
+                      <div className="link-label">Original URL</div>
+                      <p className="link-long">{link.long_url}</p>
+                    </div>
+                  </div>
+
+                  <div className="link-actions">
+                    <Link
+                      to={`/analytics/${link.id}`}
+                      className="analytics-link"
+                    >
+                      View Analytics →
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="empty-text">
+              You haven&apos;t created any links yet. Start by shortening one
+              above.
+            </p>
+          )}
+        </section>
+      </div>
     </div>
   );
 }

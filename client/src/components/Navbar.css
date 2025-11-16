@@ -1,0 +1,51 @@
+.nav-container {
+  padding: 18px;
+  background: #fffafa;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* Base link style */
+.nav-link {
+  position: relative;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #716fb4;
+  text-decoration: none;
+  padding: 6px 4px;
+  transition: color 0.35s;
+}
+
+/* Color fade on hover */
+.nav-link:hover {
+  color: #8812a3;
+}
+
+/* Underline base (hidden) */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 3px;
+  width: 0;
+  background: #2563eb;
+  border-radius: 2px;
+  transition: width 0.25s;
+}
+
+/* Show underline on hover ONLY if not active */
+.nav-link:not(.active):hover::after {
+  width: 100%;
+}
+
+/* Active link underline */
+.nav-link.active {
+  color: #1a2df8;
+}
+
+.nav-link.active::after {
+  width: 100%;
+  height: 2px;
+}

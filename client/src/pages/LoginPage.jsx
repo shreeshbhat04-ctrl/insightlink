@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import './Auth.css'; // << same CSS
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -19,58 +20,80 @@ function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Clear previous errors
+    setError('');
 
     try {
       const response = await axios.post(
         'http://localhost:5000/api/auth/login',
         formData
       );
-      
-      // Save the token to localStorage
+
       localStorage.setItem('token', response.data.token);
-
-      // Redirect to the dashboard after successful login
       navigate('/dashboard');
-
     } catch (err) {
-      const errorMessage = err.response?.data || 'Login failed. Please check your credentials.';
+      const errorMessage =
+        err.response?.data || 'Login failed. Please check your credentials.';
       setError(errorMessage);
       console.error('Login Error:', err.response);
     }
   };
 
   return (
-    <div>
-      <h2>Login to Your Account</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+    <div className="auth-page">
+      <div className="auth-card auth-card--login">
+        {/* Left: title/description */}
+        <div className="auth-left">
+          <h1>Login to Your InsightLink Account</h1>
+          <p>
+            Access your dashboard, manage your short links, and monitor click
+            performance in real time.
+          </p>
         </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
+
+        {/* Right: form */}
+        <div className="auth-right">
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label>Email:</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Password:</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            {error && <p className="error-text">{error}</p>}
+
+            <div className="auth-inline-text">
+              Don&apos;t have an account?{' '}
+              <Link to="/register">Get Started for Free</Link>
+            </div>
+
+           <button type="submit" className="button-magic">
+             <span></span>
+             <span></span>
+             <span></span>
+             <span></span>
+             <span></span>
+             <span>Login</span>
+           </button>
+
+          </form>
         </div>
-        <button type="submit">Login</button>
-      </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <p>
-        Don't have an account?{' '}
-        <Link to="/register">Get Started for Free</Link>
-      </p>
+      </div>
     </div>
   );
 }

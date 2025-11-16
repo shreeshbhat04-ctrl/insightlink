@@ -1,85 +1,173 @@
-/* Reset some default styles */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: #f7f9fb;
-  color: #222;
+/* Reset + base styles */
+* {
+  box-sizing: border-box;
 }
 
-/* Container for main content */
+html, body {
+  margin: 0;
+  padding: 0;
+   background: url("/src/assets/bg.jpg") no-repeat center center fixed;
+  background-size: cover;
+  background-color: #000;
+}
+
+/* Centered container with a premium card feel */
 .home-container {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 32px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  max-width: 520px;
+  margin: 48px auto;
+  padding: 32px 28px;
+  
+  border-radius: 18px;
+ 
   text-align: center;
+  background: transparent;
+ 
 }
 
 /* Headings */
 h1, h2 {
-  color: #2d7ff9;
-  margin-bottom: 16px;
+  color: #1d4ed8;
+  margin: 0 0 12px;
+  font-weight: 700;
 }
 
-/* CTA Button */
+h1 {
+  font-size: 1.9rem;
+}
+
+h2 {
+  font-size: 1.35rem;
+  margin-top: 10px;
+}
+
+/* Subtext / helper text (if you have any <p>) */
+.home-container p {
+  margin: 8px 0 16px;
+  font-size: 0.98rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* Primary CTA button */
 .cta-button {
-  background: #2d7ff9;
-  color: #fff;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
   border: none;
-  padding: 12px 32px;
-  border-radius: 6px;
-  font-size: 1.1rem;
+  padding: 12px 34px;
+  border-radius: 999px;
+  font-size: 1.05rem;
   cursor: pointer;
-  margin-top: 18px;
-  transition: background 0.2s;
+  margin-top: 20px;
+  font-weight: 600;
+
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease,
+    background 0.18s ease;
 }
 
 .cta-button:hover {
-  background: #195bb5;
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, 0.35);
 }
 
-/* Form styles */
+.cta-button:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+}
+
+/* Form layout */
+form {
+  margin-top: 12px;
+}
+
+/* Each form field row */
 form > div {
   margin-bottom: 18px;
   text-align: left;
 }
 
+/* Labels */
 label {
   display: block;
   margin-bottom: 6px;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.94rem;
+  color: #374151;
 }
 
+/* Inputs */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
   width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #cfd8dc;
-  border-radius: 4px;
-  font-size: 1rem;
-  box-sizing: border-box;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.98rem;
+  outline: none;
+  background: #f9fafb;
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease;
 }
 
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+/* Submit button inside form (if different from .cta-button) */
 button[type="submit"] {
   margin-top: 10px;
 }
 
-/* Error message */
-p[style*="color: red"] {
-  margin-top: 10px;
-  font-size: 0.98rem;
+/* Error message style (inline error text) */
+p[style*="color: red"],
+.error-text {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #dc2626 !important;
 }
 
-/* Link styles */
+/* Links */
 a {
-  color: #2d7ff9;
+  color: #2563eb;
   text-decoration: none;
+  font-weight: 500;
 }
 
 a:hover {
   text-decoration: underline;
+}
+
+/* Small helper text (e.g. "Already have an account?") */
+.helper-text {
+  margin-top: 18px;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .home-container {
+    margin: 24px 16px;
+    padding: 24px 18px;
+    border-radius: 14px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .cta-button {
+    width: 100%;
+  }
 }
