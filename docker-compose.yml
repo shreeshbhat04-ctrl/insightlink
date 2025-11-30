@@ -1,4 +1,3 @@
-# insightlink/docker-compose.yml
 version: '3.8'
 
 services:
@@ -23,11 +22,12 @@ services:
     ports:
       - '5000:5000'
     environment:
-      - DB_USER=${DB_USER}
+      - DB_USER=postgres
       - DB_HOST=postgres
-      - DB_DATABASE=${DB_DATABASE}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=insightlink_db
+      - DB_PASSWORD=shreesha04
+      - DB_PORT=5432
+      - REDIS_URL=redis://redis:6379
     depends_on:
       - postgres
       - redis
@@ -35,7 +35,7 @@ services:
   frontend:
     build: ./client
     ports:
-      - '8080:80' # We'll use a different port like 8080 to avoid conflicts
+      - '8080:80'
 
 volumes:
   postgres_data:
