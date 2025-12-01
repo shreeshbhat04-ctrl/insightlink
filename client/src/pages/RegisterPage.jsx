@@ -23,7 +23,7 @@ function RegisterPage() {
     setError('');
 
     try {
-      await axios.post('http://localhost:5000/api/auth/register', formData);
+      await axios.post('http://${window.location.hostname}:5000/api/auth/register', formData);
       navigate('/login');
     } catch (err) {
       const errorMessage =

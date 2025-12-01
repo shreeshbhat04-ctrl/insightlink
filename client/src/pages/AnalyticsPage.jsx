@@ -40,7 +40,7 @@ function AnalyticsPage() {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/analytics/${linkId}`,
+          `http://${window.location.hostname}:5000/api/analytics/${linkId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
