@@ -1,4 +1,3 @@
-// AnalyticsPage.jsx
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -30,6 +29,9 @@ function AnalyticsPage() {
   const { linkId } = useParams();
   const navigate = useNavigate();
 
+  // Helper to determine the backend URL dynamically
+  const backendUrl = `http://${window.location.hostname}:5000`;
+
   useEffect(() => {
     const fetchAnalytics = async () => {
       const token = localStorage.getItem("token");
@@ -39,8 +41,9 @@ function AnalyticsPage() {
       }
 
       try {
+        // Use dynamic URL here
         const response = await axios.get(
-          `http://${window.location.hostname}:5000/api/analytics/${linkId}`,
+          `${backendUrl}/api/analytics/${linkId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -58,7 +61,7 @@ function AnalyticsPage() {
     if (linkId) {
       fetchAnalytics();
     }
-  }, [linkId, navigate]);
+  }, [linkId, navigate, backendUrl]);
 
   if (!analyticsData) {
     return (
@@ -106,6 +109,7 @@ function AnalyticsPage() {
               className="button-magic button-magic-secondary"
               onClick={() => navigate("/dashboard")}
             >
+              <span></span>
               <span></span>
               <span></span>
               <span></span>
