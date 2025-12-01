@@ -1,4 +1,3 @@
-// DashboardPage.jsx
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -9,6 +8,9 @@ function DashboardPage() {
   const [longUrl, setLongUrl] = useState("");
   const navigate = useNavigate();
 
+  // Helper to determine the backend URL dynamically
+  const backendUrl = `http://${window.location.hostname}:5000`;
+
   useEffect(() => {
     const fetchLinks = async () => {
       const token = localStorage.getItem("token");
@@ -18,7 +20,8 @@ function DashboardPage() {
       }
 
       try {
-        const response = await axios.get("http://localhost:5000/api/links", {
+        // Dynamic API call
+        const response = await axios.get(`${backendUrl}/api/links`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -31,15 +34,16 @@ function DashboardPage() {
     };
 
     fetchLinks();
-  }, [navigate]);
+  }, [navigate, backendUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
     try {
+      // Dynamic API call
       const response = await axios.post(
-        "http://localhost:5000/api/links",
+        `${backendUrl}/api/links`,
         { longUrl },
         {
           headers: {
@@ -90,7 +94,9 @@ function DashboardPage() {
               <span></span>
               <span></span>
               <span></span>
-              <span>Shorten Link</span>
+              <span></span>
+              <span></span>
+            <span>Short Link</span>
             </button>
           </form>
         </section>
@@ -111,13 +117,14 @@ function DashboardPage() {
                   <div className="link-main">
                     <div>
                       <div className="link-label">Short URL</div>
+                      {/* Dynamic display link */}
                       <a
-                        href={`http://localhost:5000/${link.short_code}`}
+                        href={`${backendUrl}/${link.short_code}`}
                         target="_blank"
                         rel="noreferrer"
                         className="link-short"
                       >
-                        {`http://localhost:5000/${link.short_code}`}
+                        {`${backendUrl}/${link.short_code}`}
                       </a>
                     </div>
                     <div>

@@ -195,9 +195,9 @@
   font-weight: bold;
   color: white;
   background-color: #171717;
-  padding: 0.85em 2.1em;
+  padding: 1.4em 3.1em;
   border: none;
-  border-radius: 0.6rem;
+  border-radius: 1.0rem;
   position: relative;
   cursor: pointer;
   overflow: hidden;
