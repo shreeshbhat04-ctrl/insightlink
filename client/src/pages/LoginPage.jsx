@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import './AuthStyle.css'; 
+import './AuthStyle.css'; // << same CSS
 
 function LoginPage() {
   const [formData, setFormData] = useState({
@@ -10,11 +10,6 @@ function LoginPage() {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
-  // Helper to determine the backend URL dynamically
-  // This will become 'http://localhost:5000' on your PC
-  // And 'http://13.233.253.129:5000' on your AWS server
-  const backendUrl = `http://${window.location.hostname}:5000`;
 
   const handleChange = (e) => {
     setFormData({
@@ -28,9 +23,8 @@ function LoginPage() {
     setError('');
 
     try {
-      // Use the dynamic backendUrl here
       const response = await axios.post(
-        `${backendUrl}/api/auth/login`,
+        `/api/auth/login`,
         formData
       );
 
@@ -89,7 +83,6 @@ function LoginPage() {
             </div>
 
            <button type="submit" className="button-magic">
-             <span></span>
              <span></span>
              <span></span>
              <span></span>

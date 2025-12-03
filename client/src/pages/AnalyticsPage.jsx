@@ -1,3 +1,4 @@
+// AnalyticsPage.jsx
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -29,9 +30,6 @@ function AnalyticsPage() {
   const { linkId } = useParams();
   const navigate = useNavigate();
 
-  // Helper to determine the backend URL dynamically
-  const backendUrl = `http://${window.location.hostname}:5000`;
-
   useEffect(() => {
     const fetchAnalytics = async () => {
       const token = localStorage.getItem("token");
@@ -39,17 +37,15 @@ function AnalyticsPage() {
         navigate("/login");
         return;
       }
-
-      try {
-        // Use dynamic URL here
-        const response = await axios.get(
-          `${backendUrl}/api/analytics/${linkId}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        setAnalyticsData(response.data);
-      } catch (error) {
+try {
+  const response = await axios.get(
+    `/api/analytics/${linkId}`,
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
+  );
+  setAnalyticsData(response.data);
+}catch (error) {
         console.error("Failed to fetch analytics:", error);
         alert(
           "Could not load analytics data. You may not have permission to view this link."
@@ -61,7 +57,7 @@ function AnalyticsPage() {
     if (linkId) {
       fetchAnalytics();
     }
-  }, [linkId, navigate, backendUrl]);
+  }, [linkId, navigate]);
 
   if (!analyticsData) {
     return (
@@ -109,7 +105,6 @@ function AnalyticsPage() {
               className="button-magic button-magic-secondary"
               onClick={() => navigate("/dashboard")}
             >
-              <span></span>
               <span></span>
               <span></span>
               <span></span>

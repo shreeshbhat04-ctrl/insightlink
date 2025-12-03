@@ -11,9 +11,6 @@ function RegisterPage() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Helper to determine the backend URL dynamically
-  const backendUrl = `http://${window.location.hostname}:5000`;
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -26,8 +23,7 @@ function RegisterPage() {
     setError('');
 
     try {
-      // Use dynamic URL
-      await axios.post(`${backendUrl}/api/auth/register`, formData);
+      await axios.post(`/api/auth/register`, formData);
       navigate('/login');
     } catch (err) {
       const errorMessage =
@@ -80,15 +76,14 @@ function RegisterPage() {
               Already have an account? <Link to="/login">Login</Link>
             </div>
 
-            <button type="submit" className="button-magic">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span>Register</span>
-            </button>
+            <button className="button-magic">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span>Register</span>
+</button>
 
           </form>
         </div>
