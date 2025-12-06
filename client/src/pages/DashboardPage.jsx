@@ -8,9 +8,6 @@ function DashboardPage() {
   const [longUrl, setLongUrl] = useState("");
   const navigate = useNavigate();
 
-  // Helper to determine the backend URL dynamically
-  const backendUrl = `http://${window.location.hostname}:5000`;
-
   useEffect(() => {
     const fetchLinks = async () => {
       const token = localStorage.getItem("token");
@@ -20,8 +17,8 @@ function DashboardPage() {
       }
 
       try {
-        // Dynamic API call
-        const response = await axios.get(`${backendUrl}/api/links`, {
+        // Call through Nginx → backend
+        const response = await axios.get("/api/links", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -34,16 +31,16 @@ function DashboardPage() {
     };
 
     fetchLinks();
-  }, [navigate, backendUrl]);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
     try {
-      // Dynamic API call
+      // Call through Nginx → backend
       const response = await axios.post(
-        `${backendUrl}/api/links`,
+        "/api/links",
         { longUrl },
         {
           headers: {
@@ -58,6 +55,8 @@ function DashboardPage() {
       alert("Could not create link. Please try again.");
     }
   };
+
+  const appOrigin = window.location.origin; // e.g. http://<EC2_IP>
 
   return (
     <div className="dashboard-page">
@@ -87,7 +86,6 @@ function DashboardPage() {
               required
             />
 
-            {/* Magic animated button */}
             <button type="submit" className="button-magic">
               <span></span>
               <span></span>
@@ -96,7 +94,7 @@ function DashboardPage() {
               <span></span>
               <span></span>
               <span></span>
-            <span>Short Link</span>
+              <span>Short Link</span>
             </button>
           </form>
         </section>
@@ -117,14 +115,13 @@ function DashboardPage() {
                   <div className="link-main">
                     <div>
                       <div className="link-label">Short URL</div>
-                      {/* Dynamic display link */}
                       <a
-                        href={`${backendUrl}/${link.short_code}`}
+                        href={`${appOrigin}/${link.short_code}`}
                         target="_blank"
                         rel="noreferrer"
                         className="link-short"
                       >
-                        {`${backendUrl}/${link.short_code}`}
+                        {`${appOrigin}/${link.short_code}`}
                       </a>
                     </div>
                     <div>
