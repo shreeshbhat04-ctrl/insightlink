@@ -54,9 +54,13 @@ Create a .env file in the root directory (or separate .env files in /server if r
 Required Variables:
 
 # Database Credentials
+
 DB_USER=postgres
+
 DB_PASSWORD=your_secure_password
+
 DB_DATABASE=insightlink_db
+
 DB_PORT=5432
 
 # Run with Docker (Recommended)
