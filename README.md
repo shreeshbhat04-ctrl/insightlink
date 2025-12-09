@@ -34,9 +34,9 @@ Nginx: Reverse proxy (Production).
 
 Prerequisites
 
-Node.js (v18+)
+- Node.js (v18+)
 
-Docker & Docker Compose (Recommended)
+- Docker & Docker Compose (Recommended)
 
 PostgreSQL & Redis (If running locally without Docker)
 
@@ -49,29 +49,29 @@ PostgreSQL & Redis (If running locally without Docker)
 
 2. Environment Variables
 
-Create a .env file in the root directory (or separate .env files in /server if running locally).
+- Create a .env file in the root directory (or separate .env files in /server if running locally).
 
 Required Variables:
 
 # Database Credentials
 
-DB_USER=postgres
+- DB_USER=postgres
 
-DB_PASSWORD=your_secure_password
+- DB_PASSWORD=your_secure_password
 
-DB_DATABASE=insightlink_db
+- DB_DATABASE=insightlink_db
 
-DB_PORT=5432
+- DB_PORT=5432
 
 # Run with Docker (Recommended)
 
-This command spins up the Frontend, Backend, PostgreSQL, and Redis simultaneously.
+- This command spins up the Frontend, Backend, PostgreSQL, and Redis simultaneously.
 ```bash
 docker compose up --build
 ```
 
 # Contributing
 
-Contributions, issues, and feature requests are welcome!
+- Contributions, issues, and feature requests are welcome!
 
 
