@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api';
 import './AuthStyle.css'; // << use this CSS
 
 function RegisterPage() {
@@ -23,7 +23,7 @@ function RegisterPage() {
     setError('');
 
     try {
-      await axios.post(`/api/auth/register`, formData);
+      await api.post(`/api/auth/register`, formData);
       navigate('/login');
     } catch (err) {
       const errorMessage =
