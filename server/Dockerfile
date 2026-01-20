@@ -1,12 +1,13 @@
 # server/Dockerfile
-FROM node:20-alpine AS build
+FROM node:20-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm install --production
 
-COPY . .
+COPY . . 
 
 EXPOSE 5000
-CMD ["npm", "run", "dev"]
+
+CMD ["node", "index.js"]
