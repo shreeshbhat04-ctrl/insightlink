@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const pool = require('./db');
-const redisClient = require('./redisClient');
+//const redisClient = require('./redisClient');
+//postgres usage
+const postgresCache = require('./postgrescache');
 
 const app = express();
 
@@ -15,8 +17,8 @@ app.get('/:shortCode', async (req, res) => {
   try {
     const { shortCode } = req.params;
 
-    // 1. Check Redis Cache First
-    const cachedUrl = await redisClient.get(shortCode);
+    // 1. Check Cache First
+    const cachedUrl = await postgresCache.get(shortCode);
 
     if (cachedUrl) {
       console.log(`Cache HIT for ${shortCode}`);
@@ -37,8 +39,8 @@ app.get('/:shortCode', async (req, res) => {
     }
     const link = linkQuery.rows[0];
 
-    // 3. Store the result in Redis for next time (expires in 24 hours)
-    await redisClient.set(shortCode, link.long_url, { EX: 86400 });
+    // 3. Store the result in cache for next time (expires in 24 hours)
+    await postgresCache.set(shortCode, link.long_url, { EX: 86400 });
     
     // Log the click
     pool.query('INSERT INTO clicks (link_id, ip_address, user_agent) VALUES ($1, $2, $3)', [link.id, req.ip, req.headers['user-agent']]);
