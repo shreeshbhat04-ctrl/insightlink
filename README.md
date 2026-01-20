@@ -2,6 +2,7 @@
 
 - InsightLink is a full-stack, high-performance URL shortening service. It allows users to create short links, manage them via a dashboard,this allows them to access real time analytics and click counts 
 - The application is based on Redis caching to minimize database recalling during redirection and is fully containerized with Docker for consistent deployment for AWS
+- Available for demo "https://insightlink-1.onrender.com" in render.
 
 # Features
 
