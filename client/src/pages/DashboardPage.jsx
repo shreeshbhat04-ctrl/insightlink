@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 import "./Dashboard.css";
 
 function DashboardPage() {
@@ -18,7 +18,7 @@ function DashboardPage() {
 
       try {
         // Call through Nginx → backend
-        const response = await axios.get("/api/links", {
+        const response = await api.get("/api/links", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,7 +39,7 @@ function DashboardPage() {
 
     try {
       // Call through Nginx → backend
-      const response = await axios.post(
+      const response = await api.post(
         "/api/links",
         { longUrl },
         {
